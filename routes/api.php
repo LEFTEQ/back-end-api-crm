@@ -19,4 +19,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('user/signin', 'UserController@signIn');
 Route::post('user/signup', 'UserController@signUp');
-Route::get('user/getuser', 'UserController@getuser');
+
+Route::middleware(['auth.jwt'])->group(function () {
+    Route::get('user/getuser', 'UserController@getuser');
+
+    Route::post('blog/storecategory', 'blog\CategoriesController@store');
+    Route::get('blog/indexcategories', 'blog\CategoriesController@index');
+    Route::get('blog/indextags', 'blog\TagsController@index');
+    Route::get('blog/indexposts', 'blog\PostsController@index');
+    Route::post('blog/storepost', 'blog\PostsController@store');
+    Route::post('blog/storeimage', 'blog\PostsController@storeImage');
+    Route::post('blog/deleteimage', 'blog\PostsController@deleteImage');
+    Route::get('blog/getpost/{id}', 'blog\PostsController@getPost');
+    Route::post('blog/updatepost', 'blog\PostsController@updatePost');
+});
+
+
+
